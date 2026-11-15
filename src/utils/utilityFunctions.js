@@ -1,4 +1,6 @@
-export const getRelativeTime= (pastDateStr) => {
+import { useSelector } from "react-redux";
+
+export const getRelativeTime = (pastDateStr) => {
     const past = new Date(pastDateStr);
     const now = new Date();
     const msPerDay = 1000 * 60 * 60 * 24;
@@ -13,4 +15,15 @@ export const getRelativeTime= (pastDateStr) => {
     }
 
     return rtf.format(daysAgo, 'day');
+}
+
+export const getLabelForCount = (num) => {
+    if (num == "" || num.length <= 3)
+        return num;
+    else if (num.length <= 5)
+        return (parseInt(num) / 1000).toFixed(1) + " K";
+    else if (num.length <= 7)
+        return (parseInt(num) / 100000).toFixed(1) + " lakh";
+    else
+        return (parseInt(num) / 1000000).toFixed(1) + " M";
 }

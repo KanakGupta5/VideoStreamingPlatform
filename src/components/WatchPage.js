@@ -11,6 +11,8 @@ import CommentShimmer from "./CommentShimmer";
 import RecommendedVideoShimmer from "./RecommendedVideoShimmer";
 import { setOnlineStatus } from "../utils/appDataSlice";
 import Offline from "./Offline";
+import {addToHistory} from "../utils/historySlice";
+import useSaveHistoryToLocalStorage from "../utils/useSaveHistoryToLocalStorage";
 // import mockCommentData from "../mockData/nestedCommentData.json"
 
 const WatchPage = () => {
@@ -23,6 +25,8 @@ const WatchPage = () => {
     const [chatId, setChatId] = useState("");
     const isOnline = useSelector((store) => store.app.isOnline);
     const [isRecommendedVideosPresent, setIsRecommendedVideosPresent] = useState(true);
+    const isPauseHistory = useSelector(store => store?.history?.isPauseHistory);
+    useSaveHistoryToLocalStorage();
     // const [liveChatMessages, setLiveChatMessages] = useState([]); will not use state variable to store live messages because we dont want to bloat our state variable, we will use redux
 
     useEffect(() => {
@@ -68,7 +72,7 @@ const WatchPage = () => {
             const response = await fetch(YOUTUBE_IS_LIVE_CHAT_ENABLED + "&id=" + videoId.get("v"));
             const data = await response.json();
             if (data.error)
-                throw new Error(data?.error || "Error in fetchIsLiveChatEnabled()");
+                throw new Error(data?.error?.message || "Error in fetchIsLiveChatEnabled()");
             const chatId = data?.items && data.items.length > 0 && data.items[0]?.liveStreamingDetails?.activeLiveChatId ? data.items[0]?.liveStreamingDetails?.activeLiveChatId : null;
             if (chatId == null) {
                 setChatId(null)
@@ -78,7 +82,7 @@ const WatchPage = () => {
             setChatId(chatId);
         }
         catch (error) {
-            console.warn(error?.message || error);
+            console.warn(error);
         }
     }
 
@@ -87,7 +91,7 @@ const WatchPage = () => {
             const response = await fetch(YOUTUBE_LIVE_CHAT + "&liveChatId=" + chatId);
             const data = await response.json();
             if (data?.error)
-                throw new Error(data?.error || "Error in fetchLiveChat() with chatId", chatId);
+                throw new Error(data?.error?.message || "Error in fetchLiveChat() with chatId", chatId);
             // setLiveChatMessages(data?.items || []);
             if (data?.items && data.items.length) {
                 data.items.map(message => {
@@ -102,7 +106,7 @@ const WatchPage = () => {
             }
         }
         catch (error) {
-            console.warn(error?.message || error);
+            console.warn(error);
         }
     }
 
@@ -118,11 +122,24 @@ const WatchPage = () => {
             const response = await fetch(YOUTUBE_GET_METADATA_OF_VIDEO + "&id=" + videoId.get("v"));
             const data = await response.json();
             if(data?.error)
-                throw new Error(data?.error || "Error in fetchMetadata()");
+                throw new Error(data?.error?.message || "Error in fetchMetadata()");
+            const {id, statistics, snippet} = data?.items?.[0];
+            const currentDate = new Date()
+            const obj = {
+                videoId: id,
+                watchedAt: currentDate.toDateString(),
+                title: snippet?.title || "",
+                thumbnail: snippet?.thumbnails?.medium,
+                channelTitle: snippet?.channelTitle || "",
+                views: statistics?.viewCount || 0
+            }
+            if(!isPauseHistory){
+                dispatch(addToHistory(obj));
+            }
             return data?.items?.[0]?.snippet?.localized?.title;
         }
         catch(error){
-            console.warn(error?.message || error);
+            console.warn(error);
         }
     };
 
@@ -132,13 +149,13 @@ const WatchPage = () => {
             const response = await fetch(YOUTUBE_RECOMMENDATION_API + "&q=" + encodedTitle);
             const data = await response.json();
             if(data?.error)
-                throw new Error(data.error || "Error in fetchRecommendedVideos()");
+                throw new Error(data.error?.message || "Error in fetchRecommendedVideos()");
             setRecommendedVideos(data?.items || []);
             setIsRecommendedVideosPresent(true);
         }
         catch(error){
             setIsRecommendedVideosPresent(false);
-            console.warn(error.message || error);
+            console.warn(error);
         }
     };
 
@@ -147,13 +164,13 @@ const WatchPage = () => {
             const response = await fetch(YOUTUBE_GET_COMMENTS + "&videoId=" + videoId.get("v"));
             const data = await response.json();
             if (data.error) {
-                throw new Error(data?.error || "Failed to fetch comments. They are likely disabled");
+                throw new Error(data?.error?.message || "Failed to fetch comments. They are likely disabled");
             }
             setCommentData(data?.items || []);
             setIsCommentsPresent(true);
         }
         catch (error) {
-            console.warn(error.message || error);
+            console.warn(error);
             setIsCommentsPresent(false);
         }
 

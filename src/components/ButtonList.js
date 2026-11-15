@@ -14,11 +14,11 @@ const ButtonList = () => {
             const response = await fetch(YOUTUBE_CATEGORY_API)
             const data = await response.json();
             if(data?.error)
-                throw new Error(data?.error || "Error in fetchButtonListData()");
+                throw new Error(data?.error?.message || "Error in fetchButtonListData()");
             setButtonListData(data?.items || []);
         }
         catch(error){
-            console.warn(error?.message || error);
+            console.warn(error);
         }
     }
 

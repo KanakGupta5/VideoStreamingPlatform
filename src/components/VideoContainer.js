@@ -4,78 +4,81 @@ import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
 import VideoContainerShimmer from "./VideoContainerShimmer";
 import { useSelector } from "react-redux";
+import Error from "./Error";
 
 const VideoContainer = () => {
-    const [videoData, setVideoData] = useState([]);
-    const [isVideoDataLoading, setIsVideoDataLoading] = useState(true);
     const apiCallsCount = useRef(0);
-    const nextPageToken = useRef(null);
-    const isFetching = useRef(false);
     let targetElement = useRef(null);
     const videoCategoryId = useSelector(store => store.app.videoCategoryId);
+
+    const nextPageToken = useRef(null); //next requests possible ref
+    const isFetching = useRef(false); //to ignore the api calls if any request is still running, I cant use isLoading because state variable updates are asynchronous
+    const [isLoading, setIsLoading] = useState(false); //loading state, control the display of shimmer ui
+    const [isError, setIsError] = useState(false); //to track if api call throws error   
+    const [videoData, setVideoData] = useState([]);
 
     useEffect(() => {
         setVideoData([]);
         apiCallsCount.current = 0;
         nextPageToken.current = null;
-        isFetching.current = false;
+        setIsError(false);
+        fetchData();
+    }, [videoCategoryId]);
+
+    useEffect(() => {
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if(entry.isIntersecting && apiCallsCount.current < OFFSET_YOUTUBE_VIDEO_API_CALLS)
-                    fetchData(); 
-                else if(apiCallsCount.current >= OFFSET_YOUTUBE_VIDEO_API_CALLS)
-                    console.log("Limit of inifinte scroll reached");
-            })
+                if (entry.isIntersecting && !isError && apiCallsCount.current < OFFSET_YOUTUBE_VIDEO_API_CALLS)
+                    fetchData();
+            });
         });
 
         targetElement.current = document.getElementById("target-element");
-        
-        if(targetElement?.current){
-            observer.observe(targetElement?.current);
+
+        if (targetElement.current) {
+            observer.observe(targetElement.current);
         }
 
-        return () => {
-            observer.disconnect();
-        }
-    }, [videoCategoryId]);
+        return () => observer.disconnect();
+    }, [videoCategoryId, isError]);
 
-    useEffect( () => {
-        fetchData();
-    }, [])    
-
-    async function fetchData(){
-        if(isFetching.current)
+    async function fetchData() {
+        if (isFetching.current || isError)
             return;
-        
+
+        isFetching.current = true;
+        setIsLoading(true);
+        const url = videoCategoryId != null ? YOUTUBE_VIDEO_API + "&videoCategoryId=" + videoCategoryId : YOUTUBE_VIDEO_API;
         try {
-            isFetching.current = true;
-            setIsVideoDataLoading(true);
-            const url = videoCategoryId != null ? YOUTUBE_VIDEO_API + "&videoCategoryId=" + videoCategoryId : YOUTUBE_VIDEO_API;
             const response = nextPageToken && nextPageToken.current ? await fetch(url + "&pageToken=" + nextPageToken.current) : await fetch(url);
             const data = await response.json();
-            if(data?.error)
+            if (data?.error)
                 throw new Error(data?.error?.message || "Error in fetchData()");
             setVideoData(prevData => [...prevData, ...data?.items]);
-            nextPageToken.current = data?.nextPageToken;
+            setIsError(false);
+            nextPageToken.current = data?.nextPageToken || null;
             apiCallsCount.current = apiCallsCount.current + 1;
-            setIsVideoDataLoading(false);     
         }
-        catch(error){
-            console.warn(error);          
+        catch (error) {
+            console.warn(error);
+            nextPageToken.current = null;
+            setVideoData([]);
+            setIsError(true);
         }
-        finally{
+        finally {
             isFetching.current = false;
-            setIsVideoDataLoading(false);
+            setIsLoading(false);
         }
     }
 
-    
-    return(<>
-    <div className="grid grid-cols-4 flex-wrap gap-2 ">
-        {videoData.length > 0 && videoData.map(videoEle => <Link key={videoEle?.id} to={"/watch?v=" + videoEle?.id}><VideoCard data={videoEle}/></Link>)}
-        {isVideoDataLoading && <VideoContainerShimmer/>}        
-        <div className="h-1" id="target-element"></div>
-    </div>
+
+    return (<>
+        <div className="grid grid-cols-4 flex-wrap gap-2 ">
+            {videoData.length > 0 && videoData.map(videoEle => <Link key={videoEle?.id} to={"/watch?v=" + videoEle?.id}><VideoCard data={videoEle} /></Link>)}
+            {isLoading && <VideoContainerShimmer />}
+        </div>
+        {isError && <Error error={{ message: "Error occurred! Please try another video category." }} />}
+        {<div className="h-1" id="target-element"></div>}
     </>)
 }
 

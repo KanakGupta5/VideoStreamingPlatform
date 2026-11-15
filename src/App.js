@@ -5,6 +5,7 @@ import appStore from "./utils/appStore";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import WatchPage from "./components/WatchPage";
 import MainContainer from "./components/MainContainer";
+import HistoryContainer from "./components/HistoryContainer";
 
 export const appRouter = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const appRouter = createBrowserRouter([
           {
             index: true,
             element: <MainContainer />
+          },
+          {
+            path: "history",
+            element: <HistoryContainer />
           }
         ]
       }
