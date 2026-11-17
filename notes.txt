@@ -1,3 +1,22 @@
+Episode 1
+-Requirement Clarification
+- Sidebar Component
+- Header Component
+- Watch Component
+    - useParams vs useSearchParams
+- Recommendation Component
+
+Episode 2
+- search functionality
+    - debounced search
+    - redux as a cache
+- nested comment section
+
+Episode 3
+- Live chat
+    - challenges faced
+    - Websocket vs API polling
+
 **************************************** Episode 1 **************************************** 
 Q. What is reportWebVitals.js
 A.  Web Vitals are performance metrics provided by Google to measure important aspects of the user experience, such as loading performance, responsiveness, and visual stability. The three Core Web Vitals are LCP for loading, INP for responsiveness, and CLS for visual stability.

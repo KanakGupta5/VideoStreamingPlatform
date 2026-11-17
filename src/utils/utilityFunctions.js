@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 
 export const getRelativeTime = (pastDateStr) => {
     const past = new Date(pastDateStr);
@@ -18,7 +17,7 @@ export const getRelativeTime = (pastDateStr) => {
 }
 
 export const getLabelForCount = (num) => {
-    if (num == "" || num.length <= 3)
+    if (num === "" || num.length <= 3)
         return num;
     else if (num.length <= 5)
         return (parseInt(num) / 1000).toFixed(1) + " K";

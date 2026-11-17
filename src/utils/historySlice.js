@@ -20,16 +20,16 @@ const historySlice = createSlice({
     reducers: {
         addToHistory: (state, action) => {
             const {videoId} = action?.payload;
-            const index = state.videoData.findIndex(ele => ele.videoId == videoId);
-            if(index != -1){
+            const index = state.videoData.findIndex(ele => ele.videoId === videoId);
+            if(index !== -1){
                 state.videoData.splice(index, 1);
             }
             state.videoData.unshift(action?.payload);
         },
         removeFromHistory: (state, action) => {
             const {videoId} = action?.payload;
-            const index = state.videoData.findIndex(ele => ele.videoId == videoId);
-            if(index != -1)
+            const index = state.videoData.findIndex(ele => ele.videoId === videoId);
+            if(index !== -1)
                 state.videoData.splice(index, 1);
             else
                 console.warn("Error occured in removeFromHistory");

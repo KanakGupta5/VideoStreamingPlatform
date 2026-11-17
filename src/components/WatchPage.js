@@ -56,7 +56,7 @@ const WatchPage = () => {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            if (chatId != null && chatId != "")
+            if (chatId !== null && chatId !== "")
                 fetchLiveChat(chatId);
         }, 3000);
 
