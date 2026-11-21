@@ -1,4 +1,4 @@
-import offlineIcon from "../assets/images/offline.png"
+// import offlineIcon from "../assets/images/offline.png"
 
 const Offline = () => {
     return <div className=" flex flex-col justify-center items-center gap-y-4">

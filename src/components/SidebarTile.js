@@ -16,7 +16,7 @@ const SidebarTile = ({ data }) => {
                         {options.length > 0 && options.map((opt, index) =>
                             <Link key={index} to={opt?.navigate}><li key={index} className="px-2 py-2 flex cursor-pointer hover:bg-gray-200 rounded-lg">
                                 <div className="w-1/4">
-                                    <img className="w-6" src={opt?.icon} />
+                                    <img className="w-6" src={opt?.icon} alt="icon"/>
                                 </div>
                                 <p className="w-3/4 text-sm font-medium text-gray-700">{opt?.displayName}</p>
                             </li>
@@ -30,7 +30,7 @@ const SidebarTile = ({ data }) => {
                         {heading ? (
                             <div>
                                 {headingIcon && <div className="w-full flex justify-center">
-                                    <img className="w-6" src={headingIcon}></img>
+                                    <img className="w-6" src={headingIcon} alt="icon"></img>
                                 </div>}
                                 {heading && <h4 className="text-xs">{heading}</h4>}
                             </div>
@@ -40,7 +40,7 @@ const SidebarTile = ({ data }) => {
                                     {options.length > 0 && options.map((opt, index) =>
                                         <Link to={opt.navigate}><li key={index} className="py-2 flex flex-col items-center cursor-pointer hover:bg-gray-200 rounded-lg">
                                             <div >
-                                                <img className="w-6" src={opt?.icon} />
+                                                <img className="w-6" src={opt?.icon} alt="icon"/>
                                             </div>
                                             <p className="text-xs font-medium text-gray-700">{opt?.displayName}</p>
                                         </li>

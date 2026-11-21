@@ -8,7 +8,7 @@ const VideoCard = ({ data }) => {
 
     return <>
         <div className="flex flex-col p-2 rounded-xl hover:bg-pink-100 hover:cursor-pointer">
-            <img className="rounded-lg" src={thumbnails?.medium?.url}></img>
+            <img className="rounded-lg" src={thumbnails?.medium?.url} alt="icon"></img>
             <div className="flex">
                 <h4 className="font-medium line-clamp-2">{title}</h4>
             </div>

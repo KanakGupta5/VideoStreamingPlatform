@@ -10,7 +10,7 @@ const Suggestion = ({data}) => {
         {data.map(suggestionEle => 
             <Link key={suggestionEle?.id} to={"/watch?v=" +suggestionEle?.id} onMouseDown={(e) => e.preventDefault()}>
                 <div className="flex px-2 py-1 hover:bg-slate-200 hover:rounded-lg">
-                    <div className="pr-3"><img className="w-5 inline" src={SearchIcon}/></div>
+                    <div className="pr-3"><img className="w-5 inline" src={SearchIcon} alt="icon"/></div>
                     {getShortTitle(suggestionEle?.title)}
                 </div>
              </Link>
