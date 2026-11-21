@@ -25,6 +25,7 @@ const MainContainer = () => {
             window.removeEventListener("online", handleOnline);
             window.removeEventListener("offline", handleOffline);
         };
+        // eslint-disable-next-line
     }, [])
     return <>
         <div className="flex flex-col flex-1 min-w-0 gap-3">
