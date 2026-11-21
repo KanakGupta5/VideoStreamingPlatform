@@ -23,6 +23,7 @@ const VideoContainer = () => {
         nextPageToken.current = null;
         setIsError(false);
         fetchData();
+         // eslint-disable-next-line
     }, [videoCategoryId]);
 
     useEffect(() => {
@@ -40,8 +41,10 @@ const VideoContainer = () => {
         }
 
         return () => observer.disconnect();
+         // eslint-disable-next-line
     }, [videoCategoryId, isError]);
 
+     // eslint-disable-next-line
     async function fetchData() {
         if (isFetching.current || isError)
             return;

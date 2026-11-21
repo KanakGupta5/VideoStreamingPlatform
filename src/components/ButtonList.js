@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import buttonListData from "../mockData/buttonListData.json"
+// import buttonListData from "../mockData/buttonListData.json"
 import Button from "./Button";
 import {YOUTUBE_CATEGORY_API} from "../utils/constants";
 

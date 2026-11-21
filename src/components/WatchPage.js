@@ -46,12 +46,14 @@ const WatchPage = () => {
             window.removeEventListener("online", handleOnline);
             window.removeEventListener("offline", handleOffline);
         };
+         // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
         fetchData();
         // API POLLING
         fetchIsLiveChatEnabled();
+         // eslint-disable-next-line
     }, [videoId.get("v")])
 
     useEffect(() => {
@@ -63,7 +65,7 @@ const WatchPage = () => {
         return () => {
             clearInterval(timer);
         }
-
+         // eslint-disable-next-line
     }, [chatId]);
 
 
@@ -78,6 +80,7 @@ const WatchPage = () => {
                 setChatId(null)
                 return;
             }
+             // eslint-disable-next-line
             setIsLiveStream(true);
             setChatId(chatId);
         }
