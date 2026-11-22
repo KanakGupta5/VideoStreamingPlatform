@@ -37,19 +37,21 @@
 - Display an offline fallback experience when the connection is unavailable.
 - Use shimmer UI to provide feedback while asynchronous content is loading.
 
-# Tech stack
-    - React – component-based UI
-    - Redux Toolkit – application-wide state management
-    - React Redux – connecting React components to the Redux store
-    - React Router – client-side routing
-    - Tailwind CSS – styling
-    - YouTube Data API v3 – video, search, category, comment and live-chat data
-    - Browser APIs – IntersectionObserver, localStorage, and online/offline events
+# Tech Stack
+
+- **React** – Component-based UI
+- **Redux Toolkit** – Application-wide state management
+- **React Redux** – Connecting React components to the Redux store
+- **React Router** – Client-side routing
+- **Tailwind CSS** – Styling
+- **YouTube Data API v3** – Video, search, category, comment and live-chat data
+- **Browser APIs** – Intersection Observer, localStorage and online/offline events
 
 ## Project Structure
 
 The application is organized around these responsibilities:
 
+```text
 VideoStreamingPlatform/
 ├── public/
 ├── screenshots/
@@ -66,15 +68,16 @@ VideoStreamingPlatform/
     ├── mockData/      # Custom mock datasets for UI testing
     ├── App.js
     └── index.js
+```
 
+## Engineering Highlights
 
-# Engineering highlights
-    - Centralized state: Redux Toolkit manages shared application data such as search suggestions, video categories, and watch history.
-    - Request efficiency: Debouncing and Redux caching help avoid unnecessary repeated search-suggestion requests.
-    - Incremental loading: IntersectionObserver triggers additional feed requests as the user approaches the end of the list.
-    - Persistent state: Watch-history data is restored from and synchronized with localStorage.
-    - Asynchronous UI states: Shimmer placeholders and offline handling make loading and connectivity states visible to the user.
-    - Polling: Live-chat messages are refreshed periodically when a supported live chat is available.
+- **Centralized state:** Redux Toolkit manages shared application data such as search suggestions, video categories and watch history.
+- **Request efficiency:** Debouncing and Redux caching help avoid unnecessary repeated search-suggestion requests.
+- **Incremental loading:** Intersection Observer triggers additional feed requests as the user approaches the end of the list.
+- **Persistent state:** Watch-history data is restored from and synchronized with localStorage.
+- **Asynchronous UI states:** Shimmer placeholders and offline handling make loading and connectivity states visible to the user.
+- **Polling:** Live-chat messages are refreshed periodically when a supported live chat is available.
 
 ## Screenshots
 
