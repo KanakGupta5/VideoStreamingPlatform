@@ -46,23 +46,27 @@
     - YouTube Data API v3 – video, search, category, comment and live-chat data
     - Browser APIs – IntersectionObserver, localStorage, and online/offline events
 
-# Project structure
-    The exact folder names may differ as the project evolves. The application is organized around these responsibilities:
-    public/
-    screenshots/
+## Project Structure
+
+The application is organized around these responsibilities:
+
+VideoStreamingPlatform/
+├── public/
+├── screenshots/
 │   ├── HomePage.png
 │   ├── WatchPage.png
 │   ├── HistoryPage.png
 │   ├── LiveChat.png
 │   ├── Search.png
 │   └── FallbackUI.png
-    src/
-    ├── components/       # Reusable UI components and page sections
-    ├── utils/            # Redux slices, API constants, custom hooks and utilities
-    ├── assets/           # Images and other static assets
-    ├── mockData/         # custom mock datasets to test UI scenarios
+└── src/
+    ├── components/    # Reusable UI components and page sections
+    ├── utils/         # Redux slices, API constants, custom hooks and utilities
+    ├── assets/        # Images and other static assets
+    ├── mockData/      # Custom mock datasets for UI testing
     ├── App.js
     └── index.js
+```
 
 
 # Engineering highlights
