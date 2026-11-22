@@ -66,7 +66,6 @@ VideoStreamingPlatform/
     ├── mockData/      # Custom mock datasets for UI testing
     ├── App.js
     └── index.js
-```
 
 
 # Engineering highlights
