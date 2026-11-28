@@ -74,28 +74,31 @@ const Header = () => {
     }
 
     return <>
-        <div className="flex justify-between px-3 py-1 sticky top-0 bg-white">
-            <div className="flex w-1/12 justify-between">
-                <div className="flex justify-center items-center cursor-pointer p-3 hover:border hover:bg-gray-200 hover:rounded-full" 
+        <div className="flex items-center justify-between px-2 sm:px-3 py-1 sticky top-0 z-30 bg-white">
+            <div className="flex shrink-0 items-center sm:w-auto gap-1">
+                <div className="flex justify-center items-center cursor-pointer p-2 sm:p-3 hover:border hover:bg-gray-200 hover:rounded-full" 
                      onClick={() => handleToggleMenu()}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </div>
-                <img className="w-20 cursor-pointer" alt="icon" src={youtube}></img>
+                <img className="w-16 sm:w-20 cursor-pointer" alt="icon" src={youtube}></img>
             </div>
-            <div className="flex py-1.5 w-9/12 justify-center">
-                <input value={searchedString} onBlur={() => setShowSuggestions(false)} onFocus={() => setShowSuggestions(true)} onInput={(e) => setSearchedString(e.target.value)} className=" px-3 border w-1/2 rounded-l-full" type="text"></input>
-                <div className="flex justify-center items-center border rounded-r-full px-4 bg-slate-50 cursor-pointer hover:bg-gray-200">
-                    <img className="w-6" alt="search-icon" src={searchIcon}></img>
+            <div className="relative flex flex-1 max-w-2xl min-w-0 py-1.5 mx-1 sm:mx-3 justify-center">
+                <div className="relative flex min-w-0 w-full sm:w-1/2">
+                    <input value={searchedString} onBlur={() => setShowSuggestions(false)} onFocus={() => setShowSuggestions(true)} onInput={(e) => setSearchedString(e.target.value)} className="px-3 border min-w-0 w-full rounded-l-full outline-none focus:border-blue-500" type="text" placeholder="Search"></input>
+                    <div className="flex shrink-0 justify-center items-center border rounded-r-full px-2 sm:px-4 bg-slate-50 cursor-pointer hover:bg-gray-200">
+                        <img className="w-5 sm:w-6" alt="search-icon" src={searchIcon}></img>
+                    </div>
+                    {showSuggestions && suggestionList.length > 0 && <Suggestion data={suggestionList}/>} 
                 </div>
-                <div className="flex ml-3 first-line:justify-center border p-2 items-center rounded-full cursor-pointer bg-slate-50 hover:bg-gray-200">
+                <div className="hidden md:flex shrink-0 ml-3 justify-center border p-2 items-center rounded-full cursor-pointer bg-slate-50 hover:bg-gray-200">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                     </svg>
                 </div>
             </div>
-            <div className="flex w-2/12 items-center justify-evenly">
+            <div className="hidden lg:flex w-2/12 shrink-0 items-center justify-evenly">
                 <div className="flex border bg-slate-50 rounded-full px-2 py-1 cursor-pointer hover:bg-gray-200">
                     <div className="flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
@@ -117,7 +120,6 @@ const Header = () => {
                 </div>
             </div>
         </div>
-        {showSuggestions && suggestionList.length > 0 && <Suggestion data={suggestionList}/>}
     </>
 }
 export default Header;

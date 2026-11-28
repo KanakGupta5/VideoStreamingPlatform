@@ -15,6 +15,7 @@ const appDataSlice = createSlice({
         },
         closeMenu: (state) => {
             state.isShowMenu = false;
+            state.isMenuOpen = false;
         },
         setOnlineStatus: (state, action) => {
             state.isOnline = action.payload

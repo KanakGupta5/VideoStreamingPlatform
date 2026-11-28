@@ -181,7 +181,7 @@ const WatchPage = () => {
     }
 
     return (
-        isOnline ? (<div className="px-3 py-1 grid grid-cols-[minmax(0,3fr)_minmax(350px,1fr)] gap-4">
+        isOnline ? (<div className="px-2 sm:px-3 py-1 grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(280px,1fr)] gap-4">
             <div className="flex flex-col gap-y-2 min-w-0">
                 <iframe
                     className="rounded-lg w-full aspect-video"

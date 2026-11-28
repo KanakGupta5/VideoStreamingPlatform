@@ -76,7 +76,7 @@ const VideoContainer = () => {
 
 
     return (<>
-        <div className="grid grid-cols-4 flex-wrap gap-2 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 px-1 sm:px-0">
             {videoData.length > 0 && videoData.map(videoEle => <Link key={videoEle?.id} to={"/watch?v=" + videoEle?.id}><VideoCard data={videoEle} /></Link>)}
             {isLoading && <VideoContainerShimmer />}
         </div>

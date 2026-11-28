@@ -40,17 +40,17 @@ const HistoryContainer = () => {
         return () => clearTimeout(timer);
     }, [searchString, rawVideoData])
 
-    return (rawVideoData && rawVideoData.length > 0 ? <div className="flex flex-col w-full px-4">
-        <h4 className="text-3xl font-bold">Watch History</h4>
-        <div className="flex justify-between">
-            <div>
+    return (rawVideoData && rawVideoData.length > 0 ? <div className="flex flex-col w-full px-2 sm:px-4 pb-4">
+        <h4 className="text-2xl sm:text-3xl font-bold px-1 sm:px-0">Watch History</h4>
+        <div className="flex flex-col lg:flex-row gap-4 lg:justify-between">
+            <div className="order-2 lg:order-1 min-w-0 flex-1">
                 {Object.entries(videoData).map(([date, videos]) => <History key={date} date={date} videos={videos} />)}
             </div>
-            <div className="flex flex-col px-2 gap-y-4">
-                <div className="flex items-center border-b-2 border-black gap-x-1">
+            <div className="order-1 lg:order-2 flex flex-col px-1 sm:px-2 gap-y-3 sm:gap-y-4 lg:w-64 shrink-0">
+                <div className="flex items-center border-b-2 border-black gap-x-1 w-full sm:w-64 lg:w-full">
                     <img src={searchIcon} alt="Search" className="w-5 h-5" />
                     <input
-                        className="py-1 outline-none"
+                        className="py-1 w-full min-w-0 outline-none text-sm"
                         type="text"
                         placeholder="Search watch history"
                         value={searchString}
